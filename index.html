@@ -1,0 +1,118 @@
+<html>
+
+
+<!-- Mirrored from tap-blocks-out.apps.minigame.vip/minigame-index.html?mn_config=https://indigo.minigame.vip/v1/api/channel/indigo/main/game/tap-blocks-out/config&ts=1690342912560 by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Jul 2023 03:54:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <title>Game</title>
+    <meta charset='utf-8' />
+    <meta name='renderer' content='webkit' />
+    <meta name='viewport'
+        content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no' />
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta name='full-screen' content='true' />
+    <meta name='x5-fullscreen' content='true' />
+    <meta name='360-fullscreen' content='true' />
+    <meta name='laya' screenorientation='landscape' />
+    <meta http-equiv='expires' content='0' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
+    <meta http-equiv='expires' content='0' />
+    <meta http-equiv='Cache-Control' content='no-siteapp' />
+
+    <script src="sdk.minigame.vip/js/1.5/minigame3134.js?t=1688118020"></script>
+    <script>
+        var SDK_ON_READY = false;
+        minigame.initializeAsync().then(function () {
+            SDK_ON_READY = true
+            minigame.getEntryPointAsync().then(function (entry) {
+                console.info("Entry Point: ", entry);
+            });
+            console.info("Context Type: ", minigame.context.getType());
+        })
+        function on_sdk_init () {
+            if (SDK_ON_READY) {
+                minigame.startGameAsync()
+            } else {
+                setTimeout(on_sdk_init, 10)
+            }
+        }
+        function show_reward_ad (ctx) {
+            if (window.MiniGameAds) {
+                if (MiniGameAds.isRewardvideoReady()) {
+                    ctx.onPlay();
+                    MiniGameAds.showRewardedVideo().then(() => {
+                        ctx.onClose(true)
+                    }).catch(e => {
+                        ctx.onClose(false)
+                    });
+                } else {
+                    ctx.onClose(false)
+                }
+            } else {
+                ctx.onClose(false)
+            }
+        }
+        function show_insert_ad (ctx) {
+            console.warn("show_insert_ad")
+            if (window.SDK_ON_READY && window.MiniGameAds && MiniGameAds.isInterstitialReady()) {
+                ctx.onPlay();
+                MiniGameAds.showInterstitial().then(() => {
+                    ctx.onClose()
+                }).catch(() => {
+                    ctx.onClose()
+                })
+            } else {
+                ctx.onClose()
+            }
+        }
+        function preload_reward_ad () {
+            console.warn("preload_reward_ad")
+        }
+
+        function HUHU_showInterstitialAd (f) {
+            console.warn('ShowInsert');
+            show_insert_ad({
+                onPlay: function () {
+                    Laya.SoundManager.muted = true;
+                }, onClose: function () {
+                    f && f();
+                    Laya.SoundManager.muted = false;
+                }
+            })
+        }
+        function HUHU_showRewardedVideoAd (f) {
+            console.warn("ShowAdsReward-see_try");
+            show_reward_ad({
+                onPlay: function () {
+                    Laya.SoundManager.muted = true;
+                }, onClose: function (r) {
+                    f && f(r);
+                    Laya.SoundManager.muted = false;
+                }
+            });
+        }
+    </script>
+    <script src="YsdkV2.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function loadLib (url, f) {
+            var script = document.createElement("script");
+            script.onload = function () {
+                if (f) {
+                    on_sdk_init()
+                }
+            }
+            script.async = false;
+            script.src = url;
+            document.body.appendChild(script);
+        }
+        // console.info = console.error = console.log = console.warn = function () { }
+    </script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+
+<!-- Mirrored from tap-blocks-out.apps.minigame.vip/minigame-index.html?mn_config=https://indigo.minigame.vip/v1/api/channel/indigo/main/game/tap-blocks-out/config&ts=1690342912560 by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Jul 2023 03:54:44 GMT -->
+</html>
